@@ -1,11 +1,9 @@
 package com.joham.springbootdemo.rabbitmq;
 
-import com.joham.springbootdemo.User;
+import com.joham.springbootdemo.user.User;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * 发送者

@@ -1,6 +1,6 @@
 package com.joham.springbootdemo.rabbitmq;
 
-import com.joham.springbootdemo.User;
+import com.joham.springbootdemo.user.User;
 import com.joham.springbootdemo.rabbitmq.fanout.FanoutSender;
 import com.joham.springbootdemo.rabbitmq.topic.TopicSender;
 import org.springframework.beans.factory.annotation.Autowired;

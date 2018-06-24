@@ -1,5 +1,6 @@
 package com.joham.springbootdemo;
 
+import com.joham.springbootdemo.user.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
