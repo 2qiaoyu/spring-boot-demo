@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 添加文章类
  *
- * @author qiaoyu
+ * @author joham
  */
 @Data
 public class ArticleSaveRequest {

@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.File;
 
 /**
- * @author qiaoyu
+ * @author joham
  * 邮件发送service
  */
 @Component

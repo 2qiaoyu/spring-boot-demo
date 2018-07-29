@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 /**
- * @author qiaoyu
+ * @author joham
  */
 @RestController
 public class UidController {

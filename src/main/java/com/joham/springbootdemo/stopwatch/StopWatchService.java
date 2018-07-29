@@ -3,7 +3,7 @@ package com.joham.springbootdemo.stopwatch;
 import org.springframework.stereotype.Service;
 
 /**
- * @author qiaoyu
+ * @author joham
  */
 @Service
 public class StopWatchService {

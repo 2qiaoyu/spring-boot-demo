@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * @author qiaoyu
+ * @author joham
  */
 @Entity
 @Data

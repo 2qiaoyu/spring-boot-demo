@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * 会员实体
  *
- * @author qiaoyu
+ * @author joham
  */
 @Data
 public class UserEntity implements Serializable {

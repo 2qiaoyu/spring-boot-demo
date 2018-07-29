@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * mongodb测试
  *
- * @author qiaoyu
+ * @author joham
  */
 @RestController
 @RequestMapping("/user")

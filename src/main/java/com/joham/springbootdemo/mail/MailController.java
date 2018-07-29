@@ -11,7 +11,7 @@ import org.thymeleaf.context.Context;
 /**
  * 邮件发送
  *
- * @author qiaoyu
+ * @author joham
  */
 @RestController
 public class MailController {
