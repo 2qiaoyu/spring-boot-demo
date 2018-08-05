@@ -1,22 +1,29 @@
 package com.joham.springbootdemo.mongod;
 
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.Data;
 
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 
 /**
  * 会员实体
  *
  * @author joham
  */
+
+@QueryEntity
 @Data
-public class UserEntity implements Serializable {
+public class UserEntity{
 
-    private static final long serialVersionUID = -3258839839160856613L;
-
+    @NotNull
     private Long id;
 
+    @NotNull
+    private Integer age;
+
+    @NotNull
     private String userName;
 
+    @NotNull
     private String passWord;
 }
