@@ -25,13 +25,13 @@ public class RedisTest {
 
     @Test
     public void test() throws Exception {
-        stringRedisTemplate.opsForValue().set("aaa", "111");
-        Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
+        stringRedisTemplate.opsForValue().set("aaa", "测试");
+        Assert.assertEquals("测试", stringRedisTemplate.opsForValue().get("aaa"));
     }
 
     @Test
     public void testObj() throws Exception {
-        User user = new User(1L, "aa@126.com", "aa", "aa123456", "aa", "123");
+        User user = new User(1L, "aa@126.com", "aa", "aa123456", "测试", "123");
         ValueOperations<String, User> operations = redisTemplate.opsForValue();
         operations.set("com.neox", user);
         operations.set("com.neo.f", user, 1, TimeUnit.SECONDS);
