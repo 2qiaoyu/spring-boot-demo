@@ -24,7 +24,7 @@ public class ArticleController {
     /**
      * 添加文章
      *
-     * @param articleSaveRequest
+     * @param articleSaveRequest 添加请求
      * @return
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
@@ -36,13 +36,13 @@ public class ArticleController {
     /**
      * 文章投票
      *
-     * @param user
-     * @param articleId
+     * @param user      会员
+     * @param articleId 文章Id
      * @return
      */
     @RequestMapping(value = "voteArticle", method = RequestMethod.POST)
     public String vote(String user, String articleId) {
-        articleService.voteArticle(user, articleId);
+        articleService.voteArticle(user, "article:" + articleId);
         return "1";
     }
 
@@ -59,8 +59,8 @@ public class ArticleController {
     /**
      * 添加文章到分组
      *
-     * @param groupId
-     * @param articleId
+     * @param groupId   组Id
+     * @param articleId 文章Id
      * @return
      */
     @RequestMapping(value = "addGroups", method = RequestMethod.POST)
@@ -72,11 +72,11 @@ public class ArticleController {
     /**
      * 根据分组Id获取分组文章
      *
-     * @param groupId
+     * @param groupId 组Id
      * @return
      */
     @RequestMapping(value = "getGroupArticles", method = RequestMethod.GET)
     public List<Map<String, String>> getGroupArticles(String groupId) {
-        return articleService.getGroupArticles(groupId);
+        return articleService.getGroupArticles("group:" +groupId);
     }
 }

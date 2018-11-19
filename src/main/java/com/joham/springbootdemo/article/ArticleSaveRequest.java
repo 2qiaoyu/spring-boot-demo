@@ -10,9 +10,18 @@ import lombok.Data;
 @Data
 public class ArticleSaveRequest {
 
+    /**
+     * 发布者
+     */
     private String poster;
 
+    /**
+     * 标题
+     */
     private String title;
 
+    /**
+     * 链接
+     */
     private String link;
 }
