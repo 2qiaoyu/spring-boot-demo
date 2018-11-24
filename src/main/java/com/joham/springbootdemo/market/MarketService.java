@@ -27,12 +27,9 @@ public class MarketService {
         SessionCallback<List<Object>> sessionCallback = new SessionCallback<List<Object>>() {
             @Override
             public List<Object> execute(RedisOperations operations) throws DataAccessException {
-                /**
-                 * WATCH 命令用于在事务开始之前监视任意数量的键:
-                 * 当调用 EXEC 命令执行事务时， 如果任意一个被监视的键已经被其他客户端修改了
-                 * 那么整个事务不再执行， 直接返回失败
-                 * 此处用来监视包裹是否发生变化
-                 */
+
+                //WATCH 命令用于在事务开始之前监视任意数量的键:当调用 EXEC 命令执行事务时， 如果任意一个被监视的键已经被其他客户端修改了
+                // 那么整个事务不再执行， 直接返回失败此处用来监视包裹是否发生变化
                 operations.watch(inventory);
                 if (!operations.opsForSet().isMember(inventory, itemId)) {
                     operations.unwatch();
@@ -44,7 +41,7 @@ public class MarketService {
                 return operations.exec();
             }
         };
-        return redisTemplate.execute(sessionCallback) == null ? false : true;
+        return redisTemplate.execute(sessionCallback) != null;
     }
 
     public boolean purchaseItem(String buyerId, String itemId, String sellerId) {
@@ -74,7 +71,6 @@ public class MarketService {
                 return operations.exec();
             }
         };
-        return redisTemplate.execute(sessionCallback) == null ? false : true;
+        return redisTemplate.execute(sessionCallback) != null;
     }
-
 }
