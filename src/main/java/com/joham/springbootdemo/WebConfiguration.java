@@ -43,7 +43,7 @@ public class WebConfiguration {
                 throws IOException, ServletException {
             // TODO Auto-generated method stub
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-            System.out.println("this is MyFilter,url :" + httpServletRequest.getRequestURI());
+//            System.out.println("this is MyFilter,url :" + httpServletRequest.getRequestURI());
             filterChain.doFilter(request, response);
         }
 

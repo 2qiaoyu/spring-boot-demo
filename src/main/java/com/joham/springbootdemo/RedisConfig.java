@@ -3,9 +3,9 @@ package com.joham.springbootdemo;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import com.joham.springbootdemo.stock.RedisLock;
+import com.joham.springbootdemo.stock.RedisToolsConstant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -14,11 +14,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 
 /**
@@ -28,25 +28,8 @@ import redis.clients.jedis.JedisPoolConfig;
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
-    Logger logger = LoggerFactory.getLogger(RedisConfig.class);
-
-    @Value("${spring.redis.host}")
-    private String host;
-
-    @Value("${spring.redis.port}")
-    private int port;
-
-    @Value("${spring.redis.timeout}")
-    private int timeout;
-
-    @Value("${spring.redis.pool.max-idle}")
-    private int maxIdle;
-
-    @Value("${spring.redis.pool.max-wait}")
-    private long maxWaitMillis;
-
-    @Value("${spring.redis.password}")
-    private String password;
+    @Autowired
+    private JedisConnectionFactory jedisConnectionFactory;
 
     @Bean
     @Override
@@ -62,39 +45,46 @@ public class RedisConfig extends CachingConfigurerSupport {
         };
     }
 
-    @SuppressWarnings("rawtypes")
     @Bean
-    public CacheManager cacheManager(RedisTemplate redisTemplate) {
-        RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
+    public CacheManager cacheManager(StringRedisTemplate stringRedisTemplate) {
+        RedisCacheManager rcm = new RedisCacheManager(stringRedisTemplate);
         //设置缓存过期时间
         //rcm.setDefaultExpiration(60);//秒
         return rcm;
     }
 
     @Bean
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
-        StringRedisTemplate template = new StringRedisTemplate(factory);
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        StringRedisTemplate template = new StringRedisTemplate(redisConnectionFactory);
+        template.setConnectionFactory(redisConnectionFactory);
+        //初始化序列化框架（Jackson2JsonRedisSerializer）
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer =
+                new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
+        //初始化序列化框架（StringRedisSerializer）
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        //设置key的序列化方式
+        template.setKeySerializer(stringRedisSerializer);
+        //设置value的序列化方式
         template.setValueSerializer(jackson2JsonRedisSerializer);
-        template.afterPropertiesSet();
+        //设置hash key的序列化方式
+        template.setHashKeySerializer(stringRedisSerializer);
+        //设置hash value的序列化方式
+        template.setHashValueSerializer(stringRedisSerializer);
+
         return template;
     }
 
-    /**
-     * JedisPool注入
-     */
+
     @Bean
-    public JedisPool redisPoolFactory() {
-        logger.info("JedisPool注入成功！！");
-        logger.info("redis地址：" + host + ":" + port);
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxIdle(maxIdle);
-        jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout);
-        return jedisPool;
+    public RedisLock build() {
+        RedisLock redisLock = new RedisLock.Builder(jedisConnectionFactory, RedisToolsConstant.SINGLE)
+                .lockPrefix("lock_")
+                .sleepTime(100)
+                .build();
+        return redisLock;
     }
 }
