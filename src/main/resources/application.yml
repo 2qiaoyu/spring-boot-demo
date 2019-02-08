@@ -1,0 +1,85 @@
+---
+spring:
+  data:
+    mongodb:
+      password: admin
+      database: test
+      port: 27017
+      host: 127.0.0.1
+      username: admin
+  mail:
+    password: joham
+    default-encoding: UTF-8
+    host: smtp.exmail.qq.com
+    username: joham@joham.com
+  application:
+    name: spring-boot-demo
+  datasource:
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=UTF-8&&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&connectTimeout=0
+    username: root
+  http:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        hbm2ddl:
+          auto: update
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+  boot:
+    admin:
+      url: http://localhost:8000
+  rabbitmq:
+    password: guest
+    port: 5672
+    host: 127.0.0.1
+    username: guest
+  redis:
+    password:
+    database: 0
+    port: 6379
+    pool:
+      max-idle: 5000
+      min-idle: 0
+      max-active: 20
+      max-wait: -1
+    host: 127.0.0.1
+    timeout: 5000
+endpoints:
+  health:
+    sensitive: false
+    enabled: true
+  metrics:
+    sensitive: false
+    enabled: true
+security:
+  basic:
+    path: /admin
+    enabled: false
+  user:
+    password: password
+    name: admin
+management:
+  security:
+    roles: SUPERUSER
+    enabled: false
+  context-path: /admin
+  port: 8080
+mybatis:
+  mapperLocations: classpath:mybatis/mapper/**/*.xml
+logging:
+  path: /user/local/log
+  level:
+    com:
+      favorites: DEBUG
+    org:
+      springframework:
+        web: INFO
+      hibernate: ERROR

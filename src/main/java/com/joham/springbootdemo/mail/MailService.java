@@ -26,7 +26,7 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${mail.fromMail.addr}")
+    @Value("${spring.mail.username}")
     private String from;
 
     /**
