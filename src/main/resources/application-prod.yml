@@ -83,6 +83,5 @@ logging:
       springframework:
         web: INFO
       hibernate: ERROR
-  config: classpath:log/logback-spring.xml
 server:
-  port: 8087
+  port: 8088
