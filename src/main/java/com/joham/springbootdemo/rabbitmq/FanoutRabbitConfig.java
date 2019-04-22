@@ -17,17 +17,17 @@ import org.springframework.context.annotation.Configuration;
 public class FanoutRabbitConfig {
 
     @Bean
-    public Queue AMessage() {
+    public Queue aMessage() {
         return new Queue("fanout.A");
     }
 
     @Bean
-    public Queue BMessage() {
+    public Queue bMessage() {
         return new Queue("fanout.B");
     }
 
     @Bean
-    public Queue CMessage() {
+    public Queue cMessage() {
         return new Queue("fanout.C");
     }
 
@@ -37,17 +37,17 @@ public class FanoutRabbitConfig {
     }
 
     @Bean
-    Binding bindingExchangeA(Queue AMessage, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(AMessage).to(fanoutExchange);
+    Binding bindingExchangeA(Queue aMessage, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(aMessage).to(fanoutExchange);
     }
 
     @Bean
-    Binding bindingExchangeB(Queue BMessage, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(BMessage).to(fanoutExchange);
+    Binding bindingExchangeB(Queue bMessage, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(bMessage).to(fanoutExchange);
     }
 
     @Bean
-    Binding bindingExchangeC(Queue CMessage, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(CMessage).to(fanoutExchange);
+    Binding bindingExchangeC(Queue cMessage, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(cMessage).to(fanoutExchange);
     }
 }

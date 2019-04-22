@@ -4,7 +4,6 @@ import io.prometheus.client.spring.boot.EnablePrometheusEndpoint;
 import io.prometheus.client.spring.boot.EnableSpringBootMetricsCollector;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
@@ -26,7 +25,9 @@ public class SpringBootDemoApplication {
         SpringApplication.run(SpringBootDemoApplication.class, args);
     }
 
-    //Tomcat large file upload connection reset
+    /**
+     * Tomcat large file upload connection reset
+     */
     @Bean
     public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
         TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();

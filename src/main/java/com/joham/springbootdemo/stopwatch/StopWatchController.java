@@ -17,7 +17,7 @@ public class StopWatchController {
     private StopWatchService stopWatchService;
 
     @RequestMapping("/")
-    public void StopWatchTest() {
+    public void stopWatchTest() {
         StopWatch stopWatch = new StopWatch("stopwatch test");
 
 
