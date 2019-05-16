@@ -5,9 +5,11 @@
 * Mysql 5.6
 * RabbitMQ 3.7.4
 * MongoDB 3.6.4
+* Elasticsearch 2.4.5
 
 ## 功能
 * 集成 Redis
+* 集成 Elasticsearch
 * 集成 Mail
 * 集成 Shiro
 * 集成 Thymeleaf

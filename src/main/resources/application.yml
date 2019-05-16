@@ -7,6 +7,10 @@ spring:
       port: 27017
       host: 127.0.0.1
       username: admin
+
+    elasticsearch:
+      cluster-name: elasticsearch-ares
+      cluster-nodes: 127.0.0.1:9300
   mail:
     password: joham
     default-encoding: UTF-8
