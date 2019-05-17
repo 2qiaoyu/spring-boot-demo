@@ -99,19 +99,12 @@ public class CityService {
         //   - 短语匹配 https://www.elastic.co/guide/cn/elasticsearch/guide/current/phrase-matching.html
         //   - 字段对应权重分设置，可以优化成 enum
         //   - 由于无相关性的分值默认为 1 ，设置权重分最小值为 10
-//        FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery()
-//                .add(QueryBuilders.matchPhraseQuery("cityName", searchContent),
-//                        ScoreFunctionBuilders.weightFactorFunction(1000))
-//                .add(QueryBuilders.matchPhraseQuery("description", searchContent),
-//                        ScoreFunctionBuilders.weightFactorFunction(500))
-//                .scoreMode(SCORE_MODE_SUM).setMinScore(MIN_SCORE);
-
         FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery()
-                .add(QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("cityname", searchContent)),
+                .add(QueryBuilders.matchPhraseQuery("cityName", searchContent),
                         ScoreFunctionBuilders.weightFactorFunction(1000))
-                .add(QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("description", searchContent)),
-                        ScoreFunctionBuilders.weightFactorFunction(100));
-
+                .add(QueryBuilders.matchPhraseQuery("description", searchContent),
+                        ScoreFunctionBuilders.weightFactorFunction(500))
+                .scoreMode(SCORE_MODE_SUM).setMinScore(MIN_SCORE);
 
         // 分页参数
         Pageable pageable = new PageRequest(pageNumber, pageSize);
